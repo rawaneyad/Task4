@@ -1,9 +1,10 @@
 import Table from './components/Table';
 import { useEffect,useState } from 'react';
 import Button from './components/Button';
+import UserForm from './components/UserForm';
 function App() {
   const [users, setUsers] = useState([]);
-
+  const [formName, setFormName] = useState('Add New User');
   useEffect(() => {
     const getUsers = async () => {
       const usersFromAPI = await fetchUsers();
@@ -29,6 +30,7 @@ function App() {
   return (
     <div className="container">
       <h1>User Table</h1>
+      <UserForm formName={formName}/>
       <Button name='Add New User'/>
       <Table users={users} onDelete={deleteUser}/>
     </div>
