@@ -18,7 +18,7 @@ const Table = ({ users, onDelete, setFormName }) => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <Row user={user} onDelete={onDelete} setFormName={setFormName}/>
+              <Row user={user} onDelete={onDelete} setFormName={setFormName} />
             </tr>
           ))}
         </tbody>

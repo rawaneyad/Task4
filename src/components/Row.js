@@ -1,5 +1,5 @@
 import React from "react";
-import Button from './Button';
+import Button from "./Button";
 
 const Row = ({ user, onDelete, setFormName }) => {
   return (
@@ -12,8 +12,8 @@ const Row = ({ user, onDelete, setFormName }) => {
       </td>
       <td>{user.email}</td>
       <td>
-        <Button name='Edit' onClick={()=>setFormName('Edit User')}/>
-        <Button name='Delete' onClick={()=>onDelete(user.id)}/>
+        <Button name="Edit" onClick={() => setFormName("Edit User")} />
+        <Button name="Delete" onClick={() => onDelete(user.id)} />
       </td>
     </>
   );
