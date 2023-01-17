@@ -1,20 +1,12 @@
-import { useState } from "react";
-const UserForm = ({ formName, onSave }) => {
-  const [user, setUser] = useState({
-    id: Math.floor(Math.random() * 10000) + 1,
-    first_name: "",
-    last_name: "",
-    avatar: "",
-    email: "",
-  });
+const UserForm = ({ wantToEditI, onSave, user, setUser }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     onSave(user);
-    setUser({ first_name: "", last_name: "", avatar: "", email: "" });
+    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
   };
   return (
     <form onSubmit={onSubmit}>
-      <h3>{formName}</h3>
+      <h3>{wantToEditI ? "Edit User" : "Add New User"}</h3>
       <label htmlFor="fname">First name</label>
       <input
         type="text"

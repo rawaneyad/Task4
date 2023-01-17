@@ -4,7 +4,14 @@ import Button from "./components/Button";
 import UserForm from "./components/UserForm";
 function App() {
   const [users, setUsers] = useState([]);
-  const [formName, setFormName] = useState("Add New User");
+  const [wantToEditI, setWantToEditI] = useState(false);
+  const [user, setUser] = useState({
+    id: "",
+    first_name: "",
+    last_name: "",
+    avatar: "",
+    email: "",
+  });
   useEffect(() => {
     const getUsers = async () => {
       const usersFromAPI = await fetchUsers();
@@ -22,8 +29,7 @@ function App() {
 
   //Add User
   const addUser = (user) => {
-    // console.log(user);
-    setUsers([...users, user]);
+    setUsers([...users, { ...user, id: Math.random() }]);
   };
 
   //Delete User
@@ -31,12 +37,41 @@ function App() {
     setUsers(users.filter((user) => user.id !== id));
   };
 
+  // Edit User
+  const editUser = (user) => {
+    console.log(user);
+    setUsers(
+      users.map((item) =>
+        item.id === user.id
+          ? {
+              ...item,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              avatar: user.avatar,
+              email: user.email,
+            }
+          : item
+      )
+    );
+  };
+
   return (
     <div className="container">
       <h1>User Table</h1>
-      <UserForm formName={formName} onSave={addUser} />
-      <Button name="Add New User" onClick={() => setFormName("Add New User")} />
-      <Table users={users} onDelete={deleteUser} setFormName={setFormName} />
+      <UserForm
+        wantToEditI={wantToEditI}
+        onSave={wantToEditI ? editUser : addUser}
+        user={user}
+        setUser={setUser}
+      />
+      <Button name="Add New User" onClick={() => setWantToEditI(false)} />
+      <Table
+        users={users}
+        onDelete={deleteUser}
+        setWantToEditI={setWantToEditI}
+        user={user}
+        setUser={setUser}
+      />
     </div>
   );
 }

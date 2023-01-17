@@ -1,19 +1,32 @@
 import React from "react";
 import Button from "./Button";
 
-const Row = ({ user, onDelete, setFormName }) => {
+const Row = ({ item, onDelete, setWantToEditI, user, setUser }) => {
   return (
     <>
-      <td>{user.id}</td>
-      <td>{user.first_name}</td>
-      <td>{user.last_name}</td>
+      <td>{item.id}</td>
+      <td>{item.first_name}</td>
+      <td>{item.last_name}</td>
       <td>
-        <img src={user.avatar} alt={user.id} width="60" height="40" />
+        <img src={item.avatar} alt={item.id} width="60" height="40" />
       </td>
-      <td>{user.email}</td>
+      <td>{item.email}</td>
       <td>
-        <Button name="Edit" onClick={() => setFormName("Edit User")} />
-        <Button name="Delete" onClick={() => onDelete(user.id)} />
+        <Button
+          name="Edit"
+          onClick={() => {
+            setWantToEditI(true);
+            setUser({
+              ...user,
+              id: item.id,
+              first_name: item.first_name,
+              last_name: item.last_name,
+              avatar: item.avatar,
+              email: item.email,
+            });
+          }}
+        />
+        <Button name="Delete" onClick={() => onDelete(item.id)} />
       </td>
     </>
   );
