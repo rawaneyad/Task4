@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Table from './components/Table';
+import { useEffect,useState } from 'react';
 function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const usersFromAPI = await fetchUsers();
+      setUsers(usersFromAPI);
+    };
+    getUsers();
+  }, []);
+  
+  // Fetch Users
+  const fetchUsers = async () => {
+    const res = await fetch("https://reqres.in/api/users?page=1");
+    const data = await res.json();
+    return data.data;
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>User Table</h1>
+      <Table users={users}/>
     </div>
   );
 }
