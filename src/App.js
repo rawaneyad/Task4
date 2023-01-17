@@ -20,19 +20,23 @@ function App() {
     return data.data;
   };
 
+//Add User
+const addUser = (user) => {
+// console.log(user);
+  setUsers([...users, user]);
+};
+
   //Delete User
-  const deleteUser = async (id)=>{
-    // console.log(id);
-    await fetch(`https://reqres.in/api/users?page=1/${id}`, {method:'Delete'});
+  const deleteUser = (id)=>{
     setUsers(users.filter((user)=>user.id !==id))
   }
 
   return (
     <div className="container">
       <h1>User Table</h1>
-      <UserForm formName={formName}/>
-      <Button name='Add New User'/>
-      <Table users={users} onDelete={deleteUser}/>
+      <UserForm formName={formName} onSave={addUser}/>
+      <Button name='Add New User' onClick={()=>setFormName('Add New User')}/>
+      <Table users={users} onDelete={deleteUser} setFormName={setFormName}/>
     </div>
   );
 }

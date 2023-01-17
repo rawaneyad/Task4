@@ -1,7 +1,7 @@
 import React from "react";
 import Button from './Button';
 
-const Row = ({ user, onDelete }) => {
+const Row = ({ user, onDelete, setFormName }) => {
   return (
     <>
       <td>{user.id}</td>
@@ -12,7 +12,7 @@ const Row = ({ user, onDelete }) => {
       </td>
       <td>{user.email}</td>
       <td>
-        <Button name='Edit'/>
+        <Button name='Edit' onClick={()=>setFormName('Edit User')}/>
         <Button name='Delete' onClick={()=>onDelete(user.id)}/>
       </td>
     </>
