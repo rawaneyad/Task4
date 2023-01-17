@@ -18,11 +18,19 @@ function App() {
     const data = await res.json();
     return data.data;
   };
+
+  //Delete User
+  const deleteUser = async (id)=>{
+    // console.log(id);
+    await fetch(`https://reqres.in/api/users?page=1/${id}`, {method:'Delete'});
+    setUsers(users.filter((user)=>user.id !==id))
+  }
+
   return (
     <div className="container">
       <h1>User Table</h1>
       <Button name='Add New User'/>
-      <Table users={users}/>
+      <Table users={users} onDelete={deleteUser}/>
     </div>
   );
 }

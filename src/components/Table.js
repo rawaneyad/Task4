@@ -1,7 +1,7 @@
 import React from "react";
 import Row from "./Row";
 
-const Table = ({ users }) => {
+const Table = ({ users, onDelete }) => {
   return (
     <div>
       <table className="table">
@@ -17,7 +17,7 @@ const Table = ({ users }) => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <Row user={user} />
+              <Row user={user} onDelete={onDelete}/>
             </tr>
           ))}
         </tbody>

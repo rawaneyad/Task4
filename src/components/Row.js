@@ -1,7 +1,7 @@
 import React from "react";
 import Button from './Button';
 
-const Row = ({ user }) => {
+const Row = ({ user, onDelete }) => {
   return (
     <>
       <td>{user.id}</td>
@@ -13,7 +13,7 @@ const Row = ({ user }) => {
       <td>{user.email}</td>
       <td>
         <Button name='Edit'/>
-        <Button name='Delete'/>
+        <Button name='Delete' onClick={()=>onDelete(user.id)}/>
       </td>
     </>
   );
