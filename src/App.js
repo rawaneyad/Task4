@@ -1,5 +1,6 @@
 import Table from './components/Table';
 import { useEffect,useState } from 'react';
+import Button from './components/Button';
 function App() {
   const [users, setUsers] = useState([]);
 
@@ -20,6 +21,7 @@ function App() {
   return (
     <div className="container">
       <h1>User Table</h1>
+      <Button name='Add New User'/>
       <Table users={users}/>
     </div>
   );
