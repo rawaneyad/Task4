@@ -7,10 +7,18 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+
 h1 {
   text-align: center;
-  padding: 5px;
 }
+
+h1,
+h3 {
+  padding: 5px;
+  margin: 5px;
+  color: seagreen;
+}
+
 table,
 td,
 th {
@@ -28,10 +36,45 @@ td {
   padding: 15px;
 }
 
+form input {
+  padding: 20px;
+  border: 1px solid seagreen;
+  border-radius: 3px;
+  height: 40px;
+}
+
+form label {
+  color: seagreen;
+}
+
 .container {
-  max-width: 700px;
+  max-width: 1000px;
   margin: 10px auto;
   overflow: auto;
   min-height: 400px;
   padding: 10px;
+}
+
+.inputs {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex: 4;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 30px;
+  margin: 5px;
+}
+
+.btn {
+  margin: 5px;
+  padding: 10px;
+  background-color: seagreen;
+  border: 0ch;
+  color: white;
+  border-radius: 5px;
 }
