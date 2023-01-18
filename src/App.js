@@ -30,6 +30,7 @@ function App() {
   //Add User
   const addUser = (user) => {
     setUsers([...users, { ...user, id: Math.random() }]);
+    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
   };
 
   //Delete User
@@ -39,7 +40,6 @@ function App() {
 
   // Edit User
   const editUser = (user) => {
-    console.log(user);
     setUsers(
       users.map((item) =>
         item.id === user.id
@@ -53,6 +53,20 @@ function App() {
           : item
       )
     );
+    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
+  };
+
+  // change data in Add & Edit Form
+  const onChange = ({ target }) => {
+    const { name, value } = target;
+    setUser({ ...user, [name]: value });
+  };
+
+  // on click Edit Button
+  const onClickEdit = (data) => {
+    setWantToEditI(true);
+    const { id, first_name, last_name, avatar, email } = data;
+    setUser({ id, first_name, last_name, avatar, email });
   };
 
   return (
@@ -62,16 +76,22 @@ function App() {
         wantToEditI={wantToEditI}
         onSave={wantToEditI ? editUser : addUser}
         user={user}
-        setUser={setUser}
+        onChange={onChange}
       />
-      <Button name="Add New User" onClick={() => setWantToEditI(false)} />
-      <Table
-        users={users}
-        onDelete={deleteUser}
-        setWantToEditI={setWantToEditI}
-        user={user}
-        setUser={setUser}
+      <Button
+        name="Add New User"
+        onClick={() => {
+          setWantToEditI(false);
+          setUser({
+            ...user,
+            first_name: "",
+            last_name: "",
+            avatar: "",
+            email: "",
+          });
+        }}
       />
+      <Table users={users} onDelete={deleteUser} onClickEdit={onClickEdit} />
     </div>
   );
 }

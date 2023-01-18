@@ -1,7 +1,7 @@
 import React from "react";
 import Row from "./Row";
 
-const Table = ({ users, onDelete, setWantToEditI, user, setUser }) => {
+const Table = ({ users, onDelete, onClickEdit }) => {
   return (
     <div>
       <table className="table">
@@ -18,13 +18,7 @@ const Table = ({ users, onDelete, setWantToEditI, user, setUser }) => {
         <tbody>
           {users.map((item) => (
             <tr key={item.id}>
-              <Row
-                item={item}
-                onDelete={onDelete}
-                setWantToEditI={setWantToEditI}
-                user={user}
-                setUser={setUser}
-              />
+              <Row item={item} onDelete={onDelete} onClickEdit={onClickEdit} />
             </tr>
           ))}
         </tbody>

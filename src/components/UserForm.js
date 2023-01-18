@@ -1,45 +1,54 @@
-const UserForm = ({ wantToEditI, onSave, user, setUser }) => {
+const UserForm = ({ wantToEditI, onSave, user, onChange }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     onSave(user);
-    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
   };
   return (
     <form onSubmit={onSubmit}>
       <h3>{wantToEditI ? "Edit User" : "Add New User"}</h3>
-      <label htmlFor="fname">First name</label>
-      <input
-        type="text"
-        id="fname"
-        name="fname"
-        value={user.first_name}
-        onChange={(e) => setUser({ ...user, first_name: e.target.value })}
-      />
-      <label htmlFor="lname">Last name</label>
-      <input
-        type="text"
-        id="lname"
-        name="lname"
-        value={user.last_name}
-        onChange={(e) => setUser({ ...user, last_name: e.target.value })}
-      />
-      <label htmlFor="avatar">Avatar URL</label>
-      <input
-        type="text"
-        id="avatar"
-        name="avatar"
-        value={user.avatar}
-        onChange={(e) => setUser({ ...user, avatar: e.target.value })}
-      />
-      <label htmlFor="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-      />
-      <input type="submit" value="Save" />
+      <div className="inputs">
+        <div className="input">
+          <label htmlFor="first_name">First name</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value={user.first_name}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="last_name">Last name</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value={user.last_name}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="avatar">Avatar URL</label>
+          <input
+            type="text"
+            id="avatar"
+            name="avatar"
+            value={user.avatar}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={user.email}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+      </div>
+      <input className="btn" type="submit" value="Save" />
     </form>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 
-const Row = ({ item, onDelete, setWantToEditI, user, setUser }) => {
+const Row = ({ item, onDelete, onClickEdit }) => {
   return (
     <>
       <td>{item.id}</td>
@@ -15,15 +15,7 @@ const Row = ({ item, onDelete, setWantToEditI, user, setUser }) => {
         <Button
           name="Edit"
           onClick={() => {
-            setWantToEditI(true);
-            setUser({
-              ...user,
-              id: item.id,
-              first_name: item.first_name,
-              last_name: item.last_name,
-              avatar: item.avatar,
-              email: item.email,
-            });
+            onClickEdit(item);
           }}
         />
         <Button name="Delete" onClick={() => onDelete(item.id)} />
