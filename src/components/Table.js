@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UsersContext } from "../context/UsersStates";
 import Row from "./Row";
 
-const Table = ({ users, onDelete, onClickEdit }) => {
+const Table = () => {
+  const { users } = useContext(UsersContext);
   return (
     <div>
       <table className="table">
@@ -18,7 +20,7 @@ const Table = ({ users, onDelete, onClickEdit }) => {
         <tbody>
           {users.map((item) => (
             <tr key={item.id}>
-              <Row item={item} onDelete={onDelete} onClickEdit={onClickEdit} />
+              <Row item={item} />
             </tr>
           ))}
         </tbody>

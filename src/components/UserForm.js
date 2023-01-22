@@ -1,7 +1,12 @@
-const UserForm = ({ wantToEditI, onSave, user, onChange }) => {
+import React, { useContext } from "react";
+import { UsersContext } from "../context/UsersStates";
+const UserForm = () => {
+  const { onChange, user, wantToEditI, addUser, editUser } =
+    useContext(UsersContext);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    onSave(user);
+    wantToEditI ? editUser(user) : addUser(user);
   };
   return (
     <form onSubmit={onSubmit}>

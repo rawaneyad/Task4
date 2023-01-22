@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UsersContext } from "../context/UsersStates";
 import Button from "./Button";
 
-const Row = ({ item, onDelete, onClickEdit }) => {
+const Row = ({ item }) => {
+  const { onClickEdit, deleteUser } = useContext(UsersContext);
+
   return (
     <>
       <td>{item.id}</td>
@@ -18,7 +21,7 @@ const Row = ({ item, onDelete, onClickEdit }) => {
             onClickEdit(item);
           }}
         />
-        <Button name="Delete" onClick={() => onDelete(item.id)} />
+        <Button name="Delete" onClick={() => deleteUser(item.id)} />
       </td>
     </>
   );
