@@ -3,7 +3,7 @@ import { UsersContext } from "../context/UsersStates";
 import Row from "./Row";
 
 const Table = () => {
-  const { users } = useContext(UsersContext);
+  const { usersDataAPI } = useContext(UsersContext);
   return (
     <div>
       <table className="table">
@@ -18,7 +18,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((item) => (
+          {usersDataAPI.map((item) => (
             <tr key={item.id}>
               <Row item={item} />
             </tr>

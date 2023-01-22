@@ -1,34 +1,81 @@
-import React, {
-  useEffect,
-  useState,
-  createContext,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useEffect, createContext, useReducer } from "react";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "GET_USERS_DATA": {
+      return {
+        ...state,
+        usersDataAPI: action.usersFromAPI,
+      };
+    }
+    case "ADD_NEW_USER": {
+      return {
+        ...state,
+        usersDataAPI: [
+          ...state.usersDataAPI,
+          { ...action.newUser, id: Math.random() },
+        ],
+        user: { id: "", first_name: "", last_name: "", avatar: "", email: "" },
+      };
+    }
+    case "DELETE_USER": {
+      return {
+        ...state,
+        usersDataAPI: [
+          ...state.usersDataAPI.filter((user) => user.id !== action.userID),
+        ],
+      };
+    }
+    
+    case "CHANGE_INPUT": {
+      return {
+        ...state,
+        user: { ...state.user, [action.name]: action.value },
+      };
+    }
+    case "CLICK_ADD": {
+      return {
+        ...state,
+        wantToEditI: false,
+        user: { id: "", first_name: "", last_name: "", avatar: "", email: "" },
+      };
+    }
+    case "CLICK_EDIT": {
+      return {
+        ...state,
+        wantToEditI: true,
+        user: action.data,
+      };
+    }
+  }
+  throw Error("Unknown action: " + action.type);
+}
 // Create Context
 export const UsersContext = createContext();
 
 // Provider component
 export const UsersProvider = ({ children }) => {
   //Initial State
-  const initialState = [];
-
-  const [users, setUsers] = useState(initialState);
-  const [user, setUser] = useState({
-    id: "",
-    first_name: "",
-    last_name: "",
-    avatar: "",
-    email: "",
-  });
-  
-  const [wantToEditI, setWantToEditI] = useState(false);
+  const initialState = {
+    wantToEditI: false,
+    user: {
+      id: "",
+      first_name: "",
+      last_name: "",
+      avatar: "",
+      email: "",
+    },
+    usersDataAPI: [],
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const getUsers = async () => {
       const usersFromAPI = await fetchUsers();
-      setUsers(usersFromAPI);
+      dispatch({
+        type: "GET_USERS_DATA",
+        usersFromAPI: usersFromAPI,
+      });
     };
     getUsers();
   }, []);
@@ -42,78 +89,70 @@ export const UsersProvider = ({ children }) => {
 
   //Add User
   const addUser = (user) => {
-    setUsers([...users, { ...user, id: Math.random() }]);
-    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
+    dispatch({
+      type: "ADD_NEW_USER",
+      newUser: user,
+    });
   };
 
   // Edit User
-  const editUser = (user) => {
-    setUsers(
-      users.map((item) =>
-        item.id === user.id
-          ? {
-              ...item,
-              first_name: user.first_name,
-              last_name: user.last_name,
-              avatar: user.avatar,
-              email: user.email,
-            }
-          : item
-      )
-    );
-    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
-  };
+  // const editUser = (user) => {
+    
+    // setUsers((oldVal) => {
+    //   const oldList = [...usersDataAPI];
+    //   const index = oldList.findIndex((item) => item.id === user.id);
+    //   oldList[index] = user;
+    //   return oldList;
+    // });
+    // setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
+  // };
 
   // change data in Add & Edit Form
   const onChange = ({ target }) => {
     const { name, value } = target;
-    setUser({ ...user, [name]: value });
+    dispatch({
+      type: "CHANGE_INPUT",
+      name,
+      value,
+    });
   };
 
   // on click Edit Button
   const onClickEdit = (data) => {
-    setWantToEditI(true);
-    const { id, first_name, last_name, avatar, email } = data;
-    setUser({ id, first_name, last_name, avatar, email });
+    dispatch({
+      type: "CLICK_EDIT",
+      data: data,
+    });
   };
 
   // on click Add New User Button
   const onClickAdd = () => {
-    setWantToEditI(false);
-    setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
+    dispatch({
+      type: "CLICK_ADD",
+    });
   };
 
   //Delete User
   const deleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+    dispatch({
+      type: "DELETE_USER",
+      userID: id,
+    });
   };
 
-  const contextValue = useMemo(
-    () => ({
-      users,
-      user,
-      wantToEditI,
-      onClickAdd,
-      deleteUser,
-      onClickEdit,
-      onChange,
-      editUser,
-      addUser,
-    }),
-    [
-      users,
-      user,
-      wantToEditI,
-      onClickAdd,
-      deleteUser,
-      onClickEdit,
-      onChange,
-      editUser,
-      addUser,
-    ]
-  );
   return (
-    <UsersContext.Provider value={contextValue}>
+    <UsersContext.Provider
+      value={{
+        wantToEditI: state.wantToEditI,
+        user: state.user,
+        usersDataAPI: state.usersDataAPI,
+        addUser,
+        deleteUser,
+        onChange,
+        onClickEdit,
+        onClickAdd,
+      }}
+    >
       {children}
     </UsersContext.Provider>
   );
