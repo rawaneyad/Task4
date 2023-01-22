@@ -26,7 +26,17 @@ function reducer(state, action) {
         ],
       };
     }
-    
+    case "EDIT_USER": {
+      const index = state.usersDataAPI.findIndex(item =>
+        item.id === action.newUserData.id
+      );
+      state.usersDataAPI[index] = action.newUserData;
+      return {
+        ...state,
+      wantToEditI: false,
+      user: { id: "", first_name: "", last_name: "", avatar: "", email: "" },
+      };
+      }
     case "CHANGE_INPUT": {
       return {
         ...state,
@@ -96,16 +106,12 @@ export const UsersProvider = ({ children }) => {
   };
 
   // Edit User
-  // const editUser = (user) => {
-    
-    // setUsers((oldVal) => {
-    //   const oldList = [...usersDataAPI];
-    //   const index = oldList.findIndex((item) => item.id === user.id);
-    //   oldList[index] = user;
-    //   return oldList;
-    // });
-    // setUser({ ...user, first_name: "", last_name: "", avatar: "", email: "" });
-  // };
+  const editUser = (user) => {
+    dispatch({
+      type: "EDIT_USER",
+      newUserData: user
+    });
+  };
 
   // change data in Add & Edit Form
   const onChange = ({ target }) => {
@@ -151,6 +157,7 @@ export const UsersProvider = ({ children }) => {
         onChange,
         onClickEdit,
         onClickAdd,
+        editUser
       }}
     >
       {children}
