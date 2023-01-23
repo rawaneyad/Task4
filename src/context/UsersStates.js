@@ -1,12 +1,13 @@
 import React, { useEffect, createContext, useReducer } from "react";
 import reducer from "./Reducer";
 
-// Create Context
+// Context API => solve prop drilling problem
+// Create Context Object
 export const UsersContext = createContext();
 
 // Provider component
 export const UsersProvider = ({ children }) => {
-  //Initial State
+  // Initial State with default value
   const initialState = {
     wantToEditI: false,
     user: {
@@ -18,11 +19,18 @@ export const UsersProvider = ({ children }) => {
     },
     usersDataAPI: [],
   };
-  const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const usersFromAPI = await fetchUsers();
+// useReducer => manage state
+// useReducer => accepts two arguments function reducer , Initial State.
+// useReducer => returns the current state a dispatch method.
+const [state, dispatch] = useReducer(reducer, initialState);
+
+// useEffect => Runs only on the first render because I use empty array
+useEffect(() => {
+  const getUsers = async () => {
+    const usersFromAPI = await fetchUsers();
+    // dispatch => update the state to a different value and re-render.
+    // dispatch => pass argument the action.
       dispatch({
         type: "GET_USERS_DATA",
         usersFromAPI: usersFromAPI,
@@ -33,12 +41,14 @@ export const UsersProvider = ({ children }) => {
 
   // Fetch Users
   const fetchUsers = async () => {
+    // fetch => fetching a resource from a server.
+    // fetch => returns a Promise that resolves to a Response object.
     const res = await fetch("https://reqres.in/api/users?page=1");
     const data = await res.json();
     return data.data;
   };
 
-  //Add User
+  // Add User
   const addUser = (user) => {
     dispatch({
       type: "ADD_NEW_USER",
@@ -54,7 +64,7 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
-  // change data in Add & Edit Form
+  // Change data in Add & Edit Form
   const onChange = ({ target }) => {
     const { name, value } = target;
     dispatch({
@@ -64,7 +74,7 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
-  // on click Edit Button
+  // On click Edit Button
   const onClickEdit = (data) => {
     dispatch({
       type: "CLICK_EDIT",
@@ -72,14 +82,14 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
-  // on click Add New User Button
+  // On click Add New User Button
   const onClickAdd = () => {
     dispatch({
       type: "CLICK_ADD",
     });
   };
 
-  //Delete User
+  // Delete User
   const deleteUser = (id) => {
     dispatch({
       type: "DELETE_USER",
@@ -88,6 +98,7 @@ export const UsersProvider = ({ children }) => {
   };
 
   return (
+    // Provider => to wrap the tree of components that need the state Context.
     <UsersContext.Provider
       value={{
         wantToEditI: state.wantToEditI,
