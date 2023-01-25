@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
-import { UsersContext } from "../context/UsersStates";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchUsers } from "../redux";
+// import { UsersContext } from "../context/UsersStates";
 import Row from "./Row";
 
-const Table = () => {
-  const { usersDataAPI } = useContext(UsersContext);
+const Table = ({usersDataAPI, fetchUsers}) => {
+  // const { usersDataAPI } = useContext(UsersContext);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   return (
     <div>
       <table className="table">
@@ -18,15 +23,33 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {usersDataAPI.map((item) => (
-            <tr key={item.id}>
-              <Row item={item} />
-            </tr>
-          ))}
+          {
+            usersDataAPI.usersDataAPI.map((item) => (
+              <tr key={item.id}>
+                <Row item={item} />
+              </tr>
+              // console.log(item)
+
+          ))
+          }
         </tbody>
       </table>
     </div>
   );
 };
 
-export default Table;
+
+const mapStateToProps = (state) => {
+  return {
+    usersDataAPI: state.usersDataAPI,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
+

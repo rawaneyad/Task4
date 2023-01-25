@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { UsersContext } from "../context/UsersStates";
+import React from "react";
+// import { UsersContext } from "../context/UsersStates";
 import Button from "./Button";
 
 const Row = ({ item }) => {
-  const { onClickEdit, deleteUser } = useContext(UsersContext);
+  // const { onClickEdit, deleteUser } = useContext(UsersContext);
 
   return (
     <>
@@ -17,11 +17,13 @@ const Row = ({ item }) => {
       <td>
         <Button
           name="Edit"
-          onClick={() => {
-            onClickEdit(item);
-          }}
+          // onClick={() => {
+          //   onClickEdit(item);
+          // }}
         />
-        <Button name="Delete" onClick={() => deleteUser(item.id)} />
+        <Button name="Delete" 
+        // onClick={() => deleteUser(item.id)} 
+        />
       </td>
     </>
   );
