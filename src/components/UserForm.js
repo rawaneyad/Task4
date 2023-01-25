@@ -1,22 +1,20 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { onChange } from "../redux";
+import { onChange, addUser, editUser } from "../redux";
 
 const UserForm = () => {
   const {user} = useSelector(state => state.user)
   const {wantToEditI} = useSelector(state => state.wantToEditI)
   const dispatch = useDispatch();
 
-  // const { addUser, editUser } =
-    // useContext(UsersContext);
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   wantToEditI ? editUser(user) : addUser(user);
-  // };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    wantToEditI ? dispatch(editUser(user)) : 
+    dispatch(addUser(user));
+  };
   return (
     <form 
-    // onSubmit={onSubmit}
+    onSubmit={onSubmit}
     >
       <h3>
         { 

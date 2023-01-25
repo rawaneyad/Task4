@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import usersReducer from "./users/UsersReducer";
 import userReducer from "./user/UserReducer";
-import addEditReducer from "./addAndEdit/AddEditReducer";
+import addEditReducer from "./clickAdd&Edit/AddEditReducer";
 
 const rootReducer = combineReducers({
     usersDataAPI: usersReducer,

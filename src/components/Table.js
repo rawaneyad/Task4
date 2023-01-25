@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchUsers } from "../redux";
-// import { UsersContext } from "../context/UsersStates";
 import Row from "./Row";
 
 const Table = ({usersDataAPI, fetchUsers}) => {
-  // const { usersDataAPI } = useContext(UsersContext);
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -28,8 +26,6 @@ const Table = ({usersDataAPI, fetchUsers}) => {
               <tr key={item.id}>
                 <Row item={item} />
               </tr>
-              // console.log(item)
-
           ))
           }
         </tbody>

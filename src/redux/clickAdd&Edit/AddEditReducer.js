@@ -1,4 +1,5 @@
 import { CLICK_ADD, CLICK_EDIT } from "./AddEditTypes";
+import { EDIT_USER } from "../users/UsersTypes"
 
 const initialState = {
   wantToEditI: false,
@@ -16,6 +17,11 @@ const addEditReducer = (state = initialState, action) => {
         ...state,
         wantToEditI: true,
       };
+      case EDIT_USER:
+        return {
+          ...state,
+          wantToEditI: false,
+        };
     default:
       return state;
   }
