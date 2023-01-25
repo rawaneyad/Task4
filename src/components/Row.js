@@ -1,10 +1,10 @@
 import React from "react";
-// import { UsersContext } from "../context/UsersStates";
+import { useDispatch } from "react-redux";
 import Button from "./Button";
+import { deleteUser } from "../redux";
 
 const Row = ({ item }) => {
-  // const { onClickEdit, deleteUser } = useContext(UsersContext);
-
+  const dispatch = useDispatch();
   return (
     <>
       <td>{item.id}</td>
@@ -22,7 +22,7 @@ const Row = ({ item }) => {
           // }}
         />
         <Button name="Delete" 
-        // onClick={() => deleteUser(item.id)} 
+        onClick={() => dispatch(deleteUser(item.id))} 
         />
       </td>
     </>

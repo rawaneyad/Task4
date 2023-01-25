@@ -1,4 +1,4 @@
-import { GET_USERS_DATA } from "./UsersTypes"
+import { GET_USERS_DATA, DELETE_USER } from "./UsersTypes"
 
 const initialState ={
     usersDataAPI: []
@@ -10,6 +10,13 @@ const usersReducer = (state = initialState, action) => {
             ...state,
             usersDataAPI: action.usersFromAPI,
           };
+          case DELETE_USER:  return {
+              ...state,
+              usersDataAPI: [
+                ...state.usersDataAPI.filter((user) => user.id !== action.userID),
+              ],
+            };
+    
         default: return state
     }
 }
