@@ -1,16 +1,29 @@
-import React, { useContext } from "react";
-import { UsersContext } from "../context/UsersStates";
-const UserForm = () => {
-  const { onChange, user, wantToEditI, addUser, editUser } =
-    useContext(UsersContext);
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { onChange } from "../redux";
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    wantToEditI ? editUser(user) : addUser(user);
-  };
+const UserForm = () => {
+  const {user} = useSelector(state => state.user)
+  const {wantToEditI} = useSelector(state => state.wantToEditI)
+  const dispatch = useDispatch();
+
+  // const { addUser, editUser } =
+    // useContext(UsersContext);
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   wantToEditI ? editUser(user) : addUser(user);
+  // };
   return (
-    <form onSubmit={onSubmit}>
-      <h3>{wantToEditI ? "Edit User" : "Add New User"}</h3>
+    <form 
+    // onSubmit={onSubmit}
+    >
+      <h3>
+        { 
+        wantToEditI ? "Edit User" : 
+        "Add New User"
+        }
+        </h3>
       <div className="inputs">
         <div className="input">
           <label htmlFor="first_name">First name</label>
@@ -19,7 +32,7 @@ const UserForm = () => {
             id="first_name"
             name="first_name"
             value={user.first_name}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => dispatch(onChange(e))}
           />
         </div>
         <div className="input">
@@ -29,7 +42,7 @@ const UserForm = () => {
             id="last_name"
             name="last_name"
             value={user.last_name}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => dispatch(onChange(e))}
           />
         </div>
         <div className="input">
@@ -39,7 +52,7 @@ const UserForm = () => {
             id="avatar"
             name="avatar"
             value={user.avatar}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => dispatch(onChange(e))}
           />
         </div>
         <div className="input">
@@ -49,7 +62,7 @@ const UserForm = () => {
             id="email"
             name="email"
             value={user.email}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => dispatch(onChange(e))}
           />
         </div>
       </div>

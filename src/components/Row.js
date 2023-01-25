@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
-import { deleteUser } from "../redux";
+import { deleteUser, onClickEdit } from "../redux";
 
 const Row = ({ item }) => {
   const dispatch = useDispatch();
@@ -17,9 +17,9 @@ const Row = ({ item }) => {
       <td>
         <Button
           name="Edit"
-          // onClick={() => {
-          //   onClickEdit(item);
-          // }}
+          onClick={() => {
+            dispatch(onClickEdit(item));
+          }}
         />
         <Button name="Delete" 
         onClick={() => dispatch(deleteUser(item.id))} 
