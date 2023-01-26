@@ -48,7 +48,7 @@ const UserForm = () => {
         <div className="input">
           <label htmlFor="avatar">Avatar URL</label>
           <input
-            type="text"
+            type="url"
             id="avatar"
             name="avatar"
             value={user.avatar}
