@@ -31,6 +31,7 @@ const UserForm = () => {
             name="first_name"
             value={user.first_name}
             onChange={(e) => dispatch(onChange(e))}
+            required
           />
         </div>
         <div className="input">
@@ -41,6 +42,7 @@ const UserForm = () => {
             name="last_name"
             value={user.last_name}
             onChange={(e) => dispatch(onChange(e))}
+            required
           />
         </div>
         <div className="input">
@@ -51,6 +53,7 @@ const UserForm = () => {
             name="avatar"
             value={user.avatar}
             onChange={(e) => dispatch(onChange(e))}
+            required
           />
         </div>
         <div className="input">
@@ -61,6 +64,7 @@ const UserForm = () => {
             name="email"
             value={user.email}
             onChange={(e) => dispatch(onChange(e))}
+            required
           />
         </div>
       </div>
